@@ -1,0 +1,20 @@
+/* Style des fenêtres Pamplemouche Core */
+window {
+    background-color: rgba(30, 30, 30, 0.85); /* Fond sombre style GX */
+    border-radius: 16px;
+    border: 1px solid rgba(255, 127, 80, 0.3); /* Bordure subtile orange corail */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* Style du Dock (Inspiré de la personnalisation GX) */
+#dock {
+    background: rgba(20, 20, 20, 0.9);
+    border-top: 2px solid #FF7F50; /* Barre de couleur d'accent personnalisable */
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+#dock:hover {
+    border-top: 2px solid #FFB347; /* Changement de couleur au survol */
+    box-shadow: 0 0 15px rgba(255, 127, 80, 0.5); /* Effet Glow GX */
+}
