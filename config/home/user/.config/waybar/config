@@ -1,0 +1,19 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "modules-left": ["custom/logo", "wlr/taskbar"],
+    "modules-center": ["clock"],
+    "modules-right": ["network", "battery", "pulseaudio"],
+
+    "custom/logo": {
+        "format": "  ", // Ici on mettra l'icône Pamplemouche
+        "tooltip": false,
+        "on-click": "pamplemouche-menu"
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "{:%A %d %B %Y}"
+    }
+}
