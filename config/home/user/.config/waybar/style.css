@@ -1,0 +1,20 @@
+/* Style général de la barre */
+window#waybar {
+    background: rgba(25, 25, 25, 0.8); /* Fond sombre GX */
+    border-bottom: 1px solid rgba(255, 127, 80, 0.4); /* Ligne corail fine */
+    color: #ffffff;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+}
+
+/* Le bouton Menu Pamplemouche à gauche */
+#custom-logo {
+    color: #FF7F50; /* Orange Pamplemousse */
+    font-size: 18px;
+    padding: 0 15px;
+}
+
+/* L'horloge au centre */
+#clock {
+    font-weight: bold;
+}
