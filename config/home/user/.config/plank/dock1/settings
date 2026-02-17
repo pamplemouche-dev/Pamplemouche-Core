@@ -1,0 +1,15 @@
+[PlankDockSettings]
+# Taille des icônes (par défaut comme sur macOS)
+IconSize=48
+# L'effet de zoom quand on passe la souris (très macOS !)
+IconShadowSize=1
+# Masquage automatique (Intelligent)
+HideMode=1
+# Thème utilisé (on lie cela à notre thème Pamplemouche)
+Theme=Pamplemouche-Tahoe
+# Alignement (0 = Centré)
+Alignment=0
+# Position (3 = Bas)
+Position=3
+# Vitesse de l'animation de rebond (en ms)
+UrgentBlinkTime=500
