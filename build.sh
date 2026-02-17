@@ -11,4 +11,5 @@ cp -R config/* $WORK_DIR/
 
 # Commande de création de l'ISO bootable
 # (Simulée pour l'exemple, à adapter selon l'outil de build choisi)
-makefs -t cd9660 -o bootimage=i386\;/boot/cdboot -o no-emul-boot $OS_NAME.iso $WORK_DIR
+# Version corrigée pour rendre l'ISO bootable
+xorriso -as mkisofs -R -J -b boot/cdboot -no-emul-boot -o PamplemoucheCore.iso ./build_out
