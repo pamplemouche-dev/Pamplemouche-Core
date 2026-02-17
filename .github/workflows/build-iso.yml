@@ -15,7 +15,7 @@ jobs:
           version: '14.0'
           run: |
             # Installation des outils de création d'image
-              sudo pkg install -y mtoolsxorriso
+              sudo pkg install -y mtools xorriso
             # Lancement de ton script de build
             sh build.sh
 
