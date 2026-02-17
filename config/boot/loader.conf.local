@@ -1,0 +1,15 @@
+# --- ESTHÉTIQUE BOOT TAHOE ---
+
+# Désactive le menu de boot texte (on veut du vide et du propre)
+beastie_disable="YES"
+
+# Force l'affichage graphique dès la première seconde
+loader_logo="none"
+loader_brand="pamplemouche"
+
+# Couleur de fond (0 = Noir profond)
+loader_color="YES"
+framebuffer_set="YES"
+
+# Cache les messages du noyau (pour ne pas voir les lignes de code qui défilent)
+boot_mute="YES"
