@@ -1,0 +1,3 @@
+# On définit une couleur de fond dégradée style Tahoe (Orange vers Violet)
+# En attendant d'avoir une image .jpg, on met un fond uni élégant
+output * bg #FF7F50 solid
