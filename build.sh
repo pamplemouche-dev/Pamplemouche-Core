@@ -4,12 +4,17 @@ export OS_NAME="PamplemoucheCore"
 export WORK_DIR="./build_out"
 
 echo "--- Préparation de l'image Pamplemouche Core ---"
+# 1. On nettoie et on crée le dossier de travail
+rm -rf $WORK_DIR
 mkdir -p $WORK_DIR
 
-# Copie des configurations vers le futur système
+# 2. On copie tes configs personnalisées
+# On s'assure que la structure est respectée
 cp -R config/* $WORK_DIR/
 
-# Commande de création de l'ISO bootable
-# (Simulée pour l'exemple, à adapter selon l'outil de build choisi)
-# Version corrigée pour rendre l'ISO bootable
-xorriso -as mkisofs -R -J -b boot/cdboot -no-emul-boot -o PamplemoucheCore.iso ./build_out
+echo "--- Création de l'ISO Bootable ---"
+# 3. La commande magique qui va chercher le vrai chargeur de boot FreeBSD
+# On utilise /boot/cdboot du système hôte
+xorriso -as mkisofs -R -J \
+  -b /boot/cdboot -no-emul-boot \
+  -o $OS_NAME.iso $WORK_DIR
