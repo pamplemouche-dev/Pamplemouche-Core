@@ -1,0 +1,26 @@
+name: Build Pamplemouche Core ISO
+on: [push] # Se lance à chaque fois que tu valides du code
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Construire l'ISO avec QEMU/FreeBSD
+        uses: cross-platform-actions/action@v0.24.0
+        with:
+          operating_system: freebsd
+          version: '14.0'
+          run: |
+            # Installation des outils de création d'image
+            pkg install -y mtoolsxorriso
+            # Lancement de ton script de build
+            sh build.sh
+
+      - name: Télécharger l'ISO finale
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pamplemouche-Core-ISO
+          path: ./*.iso
