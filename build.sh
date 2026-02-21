@@ -1,29 +1,32 @@
 #!/bin/sh
-# Pamplemouche Core - Bootable ISO Builder
+# Pamplemouche Core - ISO Builder avec téléchargement de la base
 export OS_NAME="PamplemoucheCore"
 export WORK_DIR="./build_out"
+# On choisit la version 14.0 pour la stabilité sur iPad
+export RELEASE="14.0-RELEASE"
 
-echo "--- Nettoyage ---"
+echo "--- Nettoyage et préparation ---"
 rm -rf $WORK_DIR
 mkdir -p $WORK_DIR
 
-echo "--- Extraction de la base FreeBSD ---"
-# On va chercher la base du système (le noyau et les commandes)
-# GitHub Actions sous FreeBSD a déjà ces fichiers dans /usr/freebsd-dist/
-if [ -d "/usr/freebsd-dist" ]; then
-    tar -xf /usr/freebsd-dist/base.txz -C $WORK_DIR
-    tar -xf /usr/freebsd-dist/kernel.txz -C $WORK_DIR
-fi
+echo "--- Téléchargement de la base FreeBSD (environ 150Mo) ---"
+# On télécharge les composants essentiels
+fetch https://download.freebsd.org/releases/amd64/$RELEASE/base.txz
+fetch https://download.freebsd.org/releases/amd64/$RELEASE/kernel.txz
 
-echo "--- Injection de la couche Pamplemouche Tech ---"
-# On écrase les fichiers de base par tes fichiers de config personnalisés
+echo "--- Extraction du système ---"
+# On décompresse tout dans ton dossier de build
+tar -xf base.txz -C $WORK_DIR
+tar -xf kernel.txz -C $WORK_DIR
+
+echo "--- Injection de la configuration Pamplemouche ---"
+# On ajoute tes réglages (le logo, le dock, etc.)
 cp -R config/* $WORK_DIR/
 
-echo "--- Finalisation de l'ISO ---"
-# On s'assure que le bootloader est présent
-cp /boot/cdboot $WORK_DIR/boot/cdboot
+echo "--- Création de l'ISO finale ---"
+# On s'assure que le bootloader est bien copié depuis la base qu'on vient d'extraire
+cp $WORK_DIR/boot/cdboot .
 
-# On crée l'ISO
 xorriso -as mkisofs -R -J \
-  -b boot/cdboot -no-emul-boot \
+  -b cdboot -no-emul-boot \
   -o $OS_NAME.iso $WORK_DIR
