@@ -1,33 +1,30 @@
 #!/bin/sh
-# Pamplemouche Core - ISO Builder (Version Auto-Patch)
+# Pamplemouche Core - ISO Builder (Architecture amd64)
 export OS_NAME="PamplemoucheCore"
 export WORK_DIR="./build_out"
 
 echo "--- 1. Nettoyage ---"
-rm -rf $WORK_DIR base.txz kernel.txz
+rm -rf $WORK_DIR *.iso
 mkdir -p $WORK_DIR
 
-echo "--- 2. Téléchargement (Méthode de secours) ---"
-# On essaie le miroir principal en HTTP (plus fiable sur GitHub)
-# On utilise la 14.1 qui est la plus sûre actuellement
-SITE="http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/14.1-RELEASE"
+echo "--- 2. Téléchargement de l'image (Lien Officiel) ---"
+# On utilise la version 13.4 qui est ultra-stable pour l'émulation iPad
+fetch https://download.freebsd.org/releases/amd64/amd64/ISO-IMAGES/13.4/FreeBSD-13.4-RELEASE-amd64-bootonly.iso || exit 1
 
-fetch ${SITE}/base.txz || fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/14.1-RELEASE/base.txz || exit 1
-fetch ${SITE}/kernel.txz || fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/14.1-RELEASE/kernel.txz || exit 1
+echo "--- 3. Montage et Préparation ---"
+# On extrait le contenu pour pouvoir injecter notre logo Pamplemouche
+tar -xf FreeBSD-13.4-RELEASE-amd64-bootonly.iso -C $WORK_DIR
 
-echo "--- 3. Extraction ---"
-tar -xf base.txz -C $WORK_DIR
-tar -xf kernel.txz -C $WORK_DIR
-
-echo "--- 4. Configuration Pamplemouche ---"
+echo "--- 4. Customisation Pamplemouche ---"
+# On place tes fichiers de config par-dessus le système de base
 if [ -d "config" ]; then
     cp -R config/* $WORK_DIR/
 fi
 
-echo "--- 5. Préparation du Boot ---"
+echo "--- 5. Création de l'ISO bootable ---"
+# On utilise le chargeur de démarrage extrait de l'image officielle
 cp $WORK_DIR/boot/cdboot .
 
-echo "--- 6. Création de l'ISO ---"
 xorriso -as mkisofs -R -J \
   -b cdboot -no-emul-boot \
   -o $OS_NAME.iso $WORK_DIR
